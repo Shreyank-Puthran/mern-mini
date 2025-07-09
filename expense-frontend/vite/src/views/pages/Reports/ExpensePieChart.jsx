@@ -58,7 +58,9 @@ const ExpenseByCategory = () => {
         <Typography variant="h3" fontWeight="bold" gutterBottom>
           Expense By Category
         </Typography>
-        <div style={{ height: '100%' }}></div>
+        <div style={{ height: '100%' }}>
+          <Pie data={pieData} />
+        </div>
         
       </CardContent>
     </Card>
