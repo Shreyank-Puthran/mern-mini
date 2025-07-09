@@ -3,18 +3,15 @@ import react from '@vitejs/plugin-react';
 import jsconfigPaths from 'vite-jsconfig-paths';
 
 export default defineConfig(({ mode }) => {
-  // depending on your application, base can also be "/"
   const env = loadEnv(mode, process.cwd(), '');
   const API_URL = `${env.VITE_APP_BASE_NAME}`;
-  const PORT = 3000 || 3001;
+  // const PORT = 3000 || 3001;
 
   return {
     server: {
-      // this ensures that the browser opens upon server start
       open: true,
-      // this sets a default port to 3000
-      allowedHosts: ['mern-expense-frontend-t13b.onrender.com'],
-      port: PORT,
+      allowedHosts: ['.onrender.com'],
+      port: 3000,
       host: true
     },
     build: {
