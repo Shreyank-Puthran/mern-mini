@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
       // this ensures that the browser opens upon server start
       open: true,
       // this sets a default port to 3000
+      allowedHosts: ['.onrender.com'],
       port: PORT,
       host: true
     },
@@ -45,7 +46,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     // base: API_URL,
-    base: "/",
+    base: '/',
     plugins: [react(), jsconfigPaths()]
   };
 });
