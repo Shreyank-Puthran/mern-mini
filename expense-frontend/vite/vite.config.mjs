@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
       // this ensures that the browser opens upon server start
       open: true,
       // this sets a default port to 3000
-      allowedHosts: ['.onrender.com'],
+      allowedHosts: ['mern-expense-frontend-t13b.onrender.com'],
       port: PORT,
       host: true
     },
