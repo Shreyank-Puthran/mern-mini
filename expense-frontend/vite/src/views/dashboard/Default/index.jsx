@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react';
 
 // material-ui
 import { Grid, MenuItem, TextField } from '@mui/material';
+import { Card, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
+import api from '../../../api/axios';
+
+// Icons
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import MovieIcon from '@mui/icons-material/Movie';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import WorkIcon from '@mui/icons-material/Work';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 // project imports
 import SavingsCard from './SavingsCard';
@@ -12,6 +23,16 @@ import ExpenseCard from './ExpenseCard';
 import BudgetCard from './Buget';
 import AddTransactionCard from './AddTransaction';
 import { gridSpacing } from 'store/constant';
+
+const categoryIcons = {
+  'Food & Drinks': <FastfoodIcon fontSize="small" sx={{ mr: 1, color: '#6b7280' }} />,
+  Shopping: <ShoppingBagIcon fontSize="small" sx={{ mr: 1, color: '#6b7280' }} />,
+  Transportation: <DirectionsCarIcon fontSize="small" sx={{ mr: 1, color: '#6b7280' }} />,
+  Entertainment: <MovieIcon fontSize="small" sx={{ mr: 1, color: '#6b7280' }} />,
+  'Bills & Utilities': <ReceiptIcon fontSize="small" sx={{ mr: 1, color: '#6b7280' }} />,
+  Work: <WorkIcon fontSize="small" sx={{ mr: 1, color: '#6b7280' }} />,
+  Freelance: <BusinessCenterIcon fontSize="small" sx={{ mr: 1, color: '#6b7280' }} />
+};
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
