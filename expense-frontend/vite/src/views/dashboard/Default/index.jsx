@@ -157,10 +157,7 @@ export default function Dashboard() {
                 <Typography variant="h1" fontWeight="bold">
                   Recent Transactions
                 </Typography>
-
-                <TransactionModal open={openModal} onClose={() => setOpenModal(false)} onTransactionAdded={fetchTransactions} />
               </Box>
-
               {/* Table */}
               <TableContainer component={Paper} elevation={0} sx={{ borderRadius: 2 }}>
                 <Table>
