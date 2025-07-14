@@ -52,10 +52,29 @@ export default function Dashboard() {
 
   const [isLoading, setLoading] = useState(true);
 
+  const [transactions, setTransactions] = useState([]);
+
+  const fetchTransactions = async () => {
+    try {
+      const res = await api.get('/transactions');
+      const currentMonth = new Date().toISOString().slice(0, 7);
+
+      const filtered = res.data.filter((txn) => {
+        const txnMonth = new Date(txn.date).toISOString().slice(0, 7);
+        return txnMonth === currentMonth;
+      });
+
+      setTransactions(filtered);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const monthName = monthNames[selectedMonth - 1];
 
   useEffect(() => {
     setLoading(false);
+    fetchTransactions();
   }, []);
 
   return (
@@ -96,11 +115,74 @@ export default function Dashboard() {
           <Grid size={{ xs: 12 }}>
             <TotalGrowthBarChart isLoading={isLoading} selectedMonth={selectedMonth} />
           </Grid>
-          <Grid size={{ xs: 12}}>
+          <Grid size={{ xs: 12 }}>
             <BudgetCard selectedMonth={formattedMonth} />
           </Grid>
-          <Grid size={{ xs: 12}}>
+          <Grid size={{ xs: 12 }}>
             <AddTransactionCard />
+          </Grid>
+          <Grid size={{ xs: 12 }}>
+            <Card sx={{ p: 3, borderRadius: 2 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  justifyContent: 'space-between',
+                  alignItems: { xs: 'flex-start', sm: 'center' },
+                  mb: 2,
+                  gap: 2
+                }}
+              >
+                <Typography variant="h1" fontWeight="bold">
+                  Recent Transactions
+                </Typography>
+
+                <TransactionModal open={openModal} onClose={() => setOpenModal(false)} onTransactionAdded={fetchTransactions} />
+              </Box>
+
+              {/* Table */}
+              <TableContainer component={Paper} elevation={0} sx={{ borderRadius: 2 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Description</TableCell>
+                      <TableCell>Category</TableCell>
+                      <TableCell>Vendor</TableCell>
+                      <TableCell align="right">Amount</TableCell>
+                    </TableRow>
+                  </TableHead>
+
+                  <TableBody>
+                    {transactions.map((txn) => (
+                      <TableRow key={txn._id}>
+                        <TableCell>
+                          {new Date(txn.date).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: '2-digit',
+                            year: 'numeric'
+                          })}
+                        </TableCell>
+                        <TableCell>{txn.note || '-'}</TableCell>
+                        <TableCell>
+                          {' '}
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            {categoryIcons[txn.category]}
+                            {txn.category}
+                          </Box>
+                        </TableCell>
+                        <TableCell>{txn.payee || '-'}</TableCell>
+                        <TableCell align="right">
+                          <Typography fontWeight="bold" color={txn.type === 'Expense' ? '#d84f61' : '#59a85e'}>
+                            {`${txn.type === 'Expense' ? '-' : '+'}$${txn.amount.toFixed(2)}`}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Card>
           </Grid>
         </Grid>
       </Grid>
